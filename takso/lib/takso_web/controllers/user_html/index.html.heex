@@ -1,0 +1,9 @@
+<.header>
+  Listing Users
+</.header>
+
+<.table id="users" rows={@users}>
+  <:col :let={user} label="Name"><%= user.name %></:col>
+  <:col :let={user} label="Username"><%= user.username %></:col>
+  <:col :let={user} label="Password"><%= user.password %></:col>
+</.table>
