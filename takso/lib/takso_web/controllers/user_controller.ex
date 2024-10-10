@@ -57,4 +57,12 @@ defmodule TaksoWeb.UserController do
     redirect(conn, to: ~p"/users")
   end
 
+  # Function to go to a page where the data of a user is visualized
+  def show(conn, %{"id" => id}) do
+    # Retrieve the user data from the database
+    user = Repo.get!(User, id)
+    # Render the page where to view the user data (passing the existing data)
+    render(conn, "show.html", user: user)
+  end
+
 end
