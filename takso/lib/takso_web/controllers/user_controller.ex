@@ -24,9 +24,16 @@ defmodule TaksoWeb.UserController do
     # Create changeset (validate) with the received params
     changeset = User.changeset(%User{}, user_params)
     # Try to insert user in the database
-    Repo.insert(changeset)
-    # Assuming success, redirect to index (not render!)
-    redirect(conn, to: ~p"/users")
+    case Repo.insert(changeset) do
+      {:ok, _user} ->
+        # Success, inform and redirect to index (not render!)
+        conn
+          |> put_flash(:info, "User created successfully.")
+          |> redirect(to: ~p"/users")
+      {:error, %Ecto.Changeset{} = changeset} ->
+        # Error, return changeset (that already contains the error)
+        render(conn, "new.html", changeset: changeset)
+    end
   end
 
   # Function to go to the Edit User
