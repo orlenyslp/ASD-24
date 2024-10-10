@@ -51,8 +51,17 @@ defmodule TaksoWeb.UserController do
     user = Repo.get!(User, id)
     # Update the data (in the changeset)
     changeset = User.changeset(user, user_params)
-    # Update the data in the database
-    Repo.update(changeset)
+    # Try to update the data in the database
+    case Repo.update(changeset) do
+      {:ok, _user} ->
+        # Success, inform and redirect to index (not render!)
+        conn
+          |> put_flash(:info, "User updated successfully.")
+          |> redirect(to: ~p"/users")
+      {:error, %Ecto.Changeset{} = changeset} ->
+        # Error, return changeset (that already contains the error)
+        render(conn, "edit.html", user: user, changeset: changeset)
+    end
     # Assuming success, redirect to index (not render!)
     redirect(conn, to: ~p"/users")
   end

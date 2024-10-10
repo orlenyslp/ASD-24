@@ -6,6 +6,7 @@ defmodule Takso.Accounts.User do
     field :name, :string
     field :username, :string
     field :password, :string
+    field :age, :integer
 
     timestamps(type: :utc_datetime)
   end
@@ -13,7 +14,8 @@ defmodule Takso.Accounts.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:name, :username, :password])
-    |> validate_required([:name, :username, :password])
+    |> cast(attrs, [:name, :username, :password, :age])
+    |> validate_required([:name, :username, :password, :age])
+    |> validate_inclusion(:age, 1..150, message: "Age must be between 1 and 150.")
   end
 end

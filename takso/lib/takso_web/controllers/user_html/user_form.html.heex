@@ -4,6 +4,8 @@
 
 <.simple_form :let={f} for={@changeset} action={@action}>
   <.input field={f[:name]} type="text" label="Name" />
+  <!-- Putting 0 as minimum for testing purposes -->
+  <.input field={f[:age]} type="number" label="Age" min="0" max="150" step="1" />
   <.input field={f[:username]} type="text" label="Username" />
   <.input field={f[:password]} type="text" label="Password" />
   <:actions>
