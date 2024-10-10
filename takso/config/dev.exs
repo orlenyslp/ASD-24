@@ -3,11 +3,12 @@ import Config
 # Configure your database
 config :takso, Takso.Repo,
   username: "postgres",
-  password: "postgres",
+  password: "agile",
   hostname: "localhost",
   database: "takso_dev",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
+  port: 5432, # default port (change if your PostgreSQL instance is running in a different one)
   pool_size: 10
 
 # For development, we disable any cache and enable
