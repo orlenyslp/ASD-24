@@ -1,0 +1,16 @@
+<.header>
+  User <%= @user.id %>
+  <:actions>
+    <.link href={~p"/users/#{@user}/edit"}>
+      <.button>Edit user</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Name"><%= @user.name %></:item>
+  <:item title="Username"><%= @user.username %></:item>
+  <:item title="Password"><%= @user.password %></:item>
+</.list>
+
+<.back navigate={~p"/users"}>Back to users</.back>
