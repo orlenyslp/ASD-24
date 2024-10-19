@@ -2,11 +2,13 @@
   New Booking
 </.header>
 
-<h2>Site under construction.</h2>
-
-<form method="post" action="/bookings">
-  <input type="hidden" name="_csrf_token" value={get_csrf_token()}>
-  <input id="pickup_address">
-  <input id="dropoff_address">
-  <button id="submit_button">Submit</button>
-</form>
+<.simple_form :let={f} for={@changeset} action={~p"/bookings"}>
+  <.error :if={@changeset.action}>
+      Oops, something went wrong! Please check the errors below.
+  </.error>
+  <.input field={f[:pickup_address]} type="text" label="Pickup address" />
+  <.input field={f[:dropoff_address]} type="text" label="Dropoff address" />
+  <:actions>
+    <.button id="submit_button">Submit</.button>
+  </:actions>
+</.simple_form>
