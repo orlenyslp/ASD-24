@@ -2,6 +2,11 @@
   New Booking
 </.header>
 
-<input id="pickup_address">
-<input id="dropoff_address">
-<button id="submit_button">Submit</button>
+<h2>Site under construction.</h2>
+
+<form method="post" action="/bookings">
+  <input type="hidden" name="_csrf_token" value={get_csrf_token()}>
+  <input id="pickup_address">
+  <input id="dropoff_address">
+  <button id="submit_button">Submit</button>
+</form>
