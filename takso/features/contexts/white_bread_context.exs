@@ -70,7 +70,7 @@ defmodule WhiteBreadContext do
   then_ ~r/^I should receive a rejection message$/,
   fn state ->
     # Check that we get the expected message in the page
-    assert visible_in_page? ~r/I'm sorry but there are no taxis available, try again later./
+    assert visible_in_page? ~r/We are sorry, but there are no taxis available, try again later./
     {:ok, state}
   end
 end

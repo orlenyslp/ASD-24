@@ -7,7 +7,7 @@ defmodule Takso.BookingControllerTest do
     Repo.insert!(%Taxi{status: "busy"})
     conn = post conn, "/bookings", %{booking: [pickup_address: "Liivi 2", dropoff_address: "Lõunakeskus"]}
     conn = get conn, redirected_to(conn)
-    assert html_response(conn, 200) =~ ~r/At present, there is no taxi available!/
+    assert html_response(conn, 200) =~ ~r/We are sorry, but there are no taxis available, try again later./
   end
 
   test "Booking aceptance", %{conn: conn} do
