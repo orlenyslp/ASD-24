@@ -2,6 +2,8 @@ defmodule WhiteBreadContext do
   use WhiteBread.Context
   use Hound.Helpers
 
+  alias Takso.{Repo,Sales.Taxi}
+
   feature_starting_state fn  ->
     Application.ensure_all_started(:hound)
     %{}
@@ -9,17 +11,24 @@ defmodule WhiteBreadContext do
 
   scenario_starting_state fn _state ->
     Hound.start_session
+    Ecto.Adapters.SQL.Sandbox.checkout(Takso.Repo)
+    Ecto.Adapters.SQL.Sandbox.mode(Takso.Repo, {:shared, self()})
     %{}
   end
 
   scenario_finalize fn _status, _state ->
+    Ecto.Adapters.SQL.Sandbox.checkin(Takso.Repo)
     # Uncomment this line to automatically close the browser after each scenario
     # Hound.end_session
     nil
   end
 
   given_ ~r/^the following taxis are on duty$/,
-  fn state ->
+  fn state, %{table_data: table} ->
+    # Reads the values specified in the Gherkin feature and adds them to the DB
+    table
+    |> Enum.map(fn taxi -> Taxi.changeset(%Taxi{}, taxi) end)
+    |> Enum.each(fn changeset -> Repo.insert!(changeset) end)
     {:ok, state}
   end
 
@@ -55,6 +64,13 @@ defmodule WhiteBreadContext do
   then_ ~r/^I should receive a confirmation message$/,
   fn state ->
     assert visible_in_page? ~r/Your taxi will arrive in \d+ minutes/
+    {:ok, state}
+  end
+
+  then_ ~r/^I should receive a rejection message$/,
+  fn state ->
+    # Check that we get the expected message in the page
+    assert visible_in_page? ~r/I'm sorry but there are no taxis available, try again later./
     {:ok, state}
   end
 end
