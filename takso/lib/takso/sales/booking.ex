@@ -5,13 +5,17 @@ defmodule Takso.Sales.Booking do
   schema "bookings" do
     field :pickup_address, :string
     field :dropoff_address, :string
+    field :status, :string, default: "open"
+
+    belongs_to :user, Takso.Accounts.User
+
     timestamps()
   end
 
   @doc false
   def changeset(booking, attrs) do
     booking
-    |> cast(attrs, [:pickup_address, :dropoff_address])
+    |> cast(attrs, [:pickup_address, :dropoff_address, :status])
     |> validate_required([:pickup_address, :dropoff_address])
     |> validate_different(:pickup_address, :dropoff_address)
   end

@@ -1,7 +1,7 @@
 defmodule TaksoWeb.SessionController do
   use TaksoWeb, :controller
 
-  import Takso.Authentication, only: [check_credentials: 4]
+  import Takso.Authentication, only: [check_credentials: 4, logout: 1]
 
   def new(conn, _params) do
     render conn, "new.html"
@@ -18,6 +18,12 @@ defmodule TaksoWeb.SessionController do
         |> put_flash(:error, "Bad credentials")
         |> render("new.html")
     end
+  end
+
+  def delete(conn, _params) do
+    conn
+    |> logout
+    |> redirect(to: ~p"/users")
   end
 
 end

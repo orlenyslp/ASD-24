@@ -16,6 +16,10 @@ defmodule Takso.Authentication do
     |> put_session(:user_id, user_id)
   end
 
+  def logout(conn) do
+    configure_session(conn, drop: true)
+  end
+
   def check_credentials(conn, username, password, [repo: repo]) do
     user = repo.get_by(Takso.Accounts.User, username: username)
     if user != nil and user.password == password do

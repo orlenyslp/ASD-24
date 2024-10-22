@@ -2,9 +2,9 @@
   <ol class="breadcrumb pull-right">
     <%= if @conn.assigns.current_user do %>
       <li>Hello <%= @conn.assigns.current_user.username %></li>
-      <li><.link href={~p"/"}>Log out</.link></li>
+      <li><.link href={~p"/sessions/#{@conn.assigns.current_user.id}"} method="delete">Log out</.link></li>
     <% else %>
-      <li><.link href={~p"/"}>Log in</.link></li>
+      <li><.link href={~p"/sessions/new"}>Log in</.link></li>
     <% end %>
   </ol>
   <span class="logo"></span>
