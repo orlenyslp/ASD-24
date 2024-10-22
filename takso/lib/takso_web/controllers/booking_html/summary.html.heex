@@ -1,0 +1,10 @@
+<.header>
+  Summary of Taxi Drivers
+</.header>
+
+<.table id="summary" rows={@summary_rows}>
+  <:col :let={row} label="Driver"><%= row.driver %></:col>
+  <:col :let={row} label="#Trips"><%= row.num_trips %></:col>
+</.table>
+
+<.back navigate={~p"/bookings"}>Back to bookings</.back>

@@ -1,5 +1,25 @@
 <.header>
   Bookings
+  <:actions>
+    <.link href={~p"/bookings/new"}>
+      <.button>New Booking</.button>
+    </.link>
+  </:actions>
+  <:actions>
+    <.link href={~p"/bookings/summary"}>
+      <.button>Summary</.button>
+    </.link>
+  </:actions>
 </.header>
 
-<h2>Site under construction.</h2>
+<.table id="bookings-list" rows={@bookings}>
+  <:col :let={booking} label="Pickup Address">
+    <%= booking.pickup_address %>
+  </:col>
+  <:col :let={booking} label="Dropoff Address">
+    <%= booking.dropoff_address %>
+  </:col>
+  <:col :let={booking} label="Status">
+    <%= booking.status %>
+  </:col>
+</.table>
