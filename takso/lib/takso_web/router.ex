@@ -8,6 +8,7 @@ defmodule TaksoWeb.Router do
     plug :put_root_layout, html: {TaksoWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug Takso.Authentication, repo: Takso.Repo
   end
 
   pipeline :api do
@@ -20,6 +21,7 @@ defmodule TaksoWeb.Router do
     get "/", PageController, :home
     resources "/users", UserController
     resources "/bookings", BookingController
+    resources "/sessions", SessionController, only: [:new, :create, :delete]
   end
 
   # Other scopes may use custom stacks.
